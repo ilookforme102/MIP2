@@ -1,0 +1,43 @@
+<ion-view>
+
+    <ion-content >
+
+        <div class="list card zeromargin" ng-repeat="(key,post) in posts">
+            <div class="item item-avatar">
+            <img ng-src="{{ post.user.profileImageSmall }}">
+            <h2 style="margin-top: 8px;">{{ post.user.username }}</h2>
+            <button class="button button-outline button-positive button-small item-pull-right">
+                Follow
+            </button>
+            </div>
+
+            <div class="item item-image">
+                <img ng-src="{{post.image}}">
+            </div>
+
+            <div class="item">
+            <button class="icon button button-icon" ng-class="post.isLiked ? 'ion-ios-heart' : 'ion-ios-heart-outline'" ng-click="likeAdd(post)"></button>
+            <button ng-click="newComment[key].show = !newComment[key].show" class="icon button button-icon ion-ios-chatbubble-outline "></button>
+            <button class="icon button button-icon icon ion-ios-redo-outline"></button>
+            <p>
+                <i class="icon ion-ios-heart"></i> {{post.likes}} likes
+            </p>
+            <div>
+                <p>
+                    <b>{{post.user.username}}</b> {{post.caption}}
+                </p>
+                <p ng-repeat=" item in post.comments">
+                    <b>{{item.user.username}}</b> {{item.comment}}
+                </p>
+              <div ng-show="newComment[key].show" class="item item-input-inset item-button-right">
+                <label class="">
+                  <input class="active"  type="text" ng-model=" newComment.comment">
+                </label>
+                <button type="submit" class="button button-outline button-positive  ion-android-send" ng-click="pushComment(post.comments)"></button>
+              </div>
+
+            </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

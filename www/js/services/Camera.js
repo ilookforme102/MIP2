@@ -1,0 +1,20 @@
+/**
+ * Created by ilook on 10/3/2016.
+ */
+angular.module('someklone.services').factory('Camera', function($q) {
+
+  return {
+    getPicture: function(options) {
+      var q = $q.defer();
+
+      navigator.camera.getPicture(function(result) {
+        q.resolve(result);
+      }, function(err) {
+        q.reject(err);
+      }, options);
+
+      return q.promise;
+    }
+  }
+
+});
