@@ -33,7 +33,17 @@ angular.module('someklone.controllers', [])
 
       $scope.pushComment = function (comments) {
       comments.push($scope.newComment);
-        delete $scope.newComment;
+        $scope.newComment= {
+          show: false,
+          id: 0,
+          user: {
+            id: 0,
+            username: "Sang Cao"
+          },
+          comment:"",
+          userRefs: [],
+          tags: [""]
+        };
     };
 
   })
@@ -106,7 +116,7 @@ angular.module('someklone.controllers', [])
 
   })
 
-  .controller('PostCtrl', function ($scope,$rootScope, $state, $cordovaCamera) {
+  .controller('PostCtrl', function ($scope,$rootScope, $state, $cordovaCamera, Posts) {
     $scope.takePicture = function(){
 
       var options = {
@@ -154,7 +164,52 @@ angular.module('someklone.controllers', [])
         // error
       });
     }
+    $scope.sharePic = {
+      id: 0,
+      like: false,
+      user: {
+        id: 1,
+        username: "dtrump",
+        profileImageSmall: "http://core0.staticworld.net/images/article/2015/11/111915blog-donald-trump-100629006-primary.idge.jpg"
+      },
+      image: "http://media1.fdncms.com/sacurrent/imager/u/original/2513252/donald_trump4.jpg",
+      imageThumbnail: $rootScope.image,
+      likes: 200,
+      caption: "Always winning #elections",
+      tags: ['elections'],
+      comments: [
+        { show: false,
+          id: 0,
+          user: {
+            id: 2,
+            username: "POTUS"
+          },
+          comment: "You're never going to make it don #losing",
+          userRefs: [],
+          tags: ["losing"]
+        },
+        { show: false,
+          id: 1,
+          user: {
+            id: 3,
+            username: "HillaryC"
+          },
+          comment: "Damn right @POTUS",
+          userRefs: ["POTUS"],
+          tags: []
+        },
+      ]
 
+    },
+    Posts.following().then(function (data) {
+        $scope.sharePics = data;
+      }
+    )
+    $scope.sharePicture = function (sharepic) {
+      $scope.sharePic = sharepic  ;
+      $scope.sharePics.push(sharepic);
+
+    }
 
     $scope.goBack = function () {
 
